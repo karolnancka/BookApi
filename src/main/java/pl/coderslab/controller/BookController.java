@@ -2,18 +2,18 @@ package pl.coderslab.controller;
 
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.DispatcherServlet;
 import pl.coderslab.model.Book;
 import pl.coderslab.service.BookService;
+import pl.coderslab.service.MockBookService;
 
 
 import java.util.List;
 
 
-@RestController
+@Controller
 @RequestMapping("/books")
 public class BookController {
 
@@ -28,6 +28,26 @@ public class BookController {
     public List<Book> getList() {
         return this.bookService.getBooks();
     }
+
+    @GetMapping("/add")
+    public String addBook() {
+        return "addForm";
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public String add(@RequestParam String isbn, @RequestParam String title, @RequestParam String author,
+                    @RequestParam String publisher, @RequestParam String type){
+
+        Book newBook = new Book(0L, isbn, title, author, publisher, type);
+        bookService.add(newBook);
+
+        return "book added";
+
+    }
+
+
+
 
 
 

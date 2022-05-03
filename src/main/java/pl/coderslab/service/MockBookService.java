@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class MockBookService implements BookService {
 
-    private static Long nextId;
+    private static Long nextId = 4L;
     private List<Book> books;
 
 
@@ -20,7 +20,6 @@ public class MockBookService implements BookService {
                 "programming"));
         books.add(new Book(3L, "9780130819338", "Java	2.	Podstawy", "Cay	Horstmann,	Gary	Cornell", "Helion",
                 "programming"));
-        setNextId();
     }
 
 
@@ -28,12 +27,15 @@ public class MockBookService implements BookService {
         return nextId;
     }
 
-    public void setNextId() {
-        this.nextId = this.books.stream()
-                .mapToLong(Book::getId)
-                .max()
-                .orElse(0L) + 1;
+    public static void setNextId(Long nextId) {
+        MockBookService.nextId = nextId;
     }
+
+    public void add(Book book) {
+        book.setId(nextId++);
+        books.add(book);
+    }
+
 
 
     public List<Book> getBooks() {
