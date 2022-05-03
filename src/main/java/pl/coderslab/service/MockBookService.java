@@ -5,6 +5,7 @@ import pl.coderslab.model.Book;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MockBookService implements BookService {
@@ -31,13 +32,7 @@ public class MockBookService implements BookService {
         MockBookService.nextId = nextId;
     }
 
-    public void add(Book book) {
-        book.setId(nextId++);
-        books.add(book);
-    }
-
-
-
+    @Override
     public List<Book> getBooks() {
         return this.books;
     }
@@ -45,6 +40,20 @@ public class MockBookService implements BookService {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+    @Override
+    public void add(Book book) {
+        book.setId(nextId++);
+        books.add(book);
+    }
+
+    @Override
+    public Optional<Book> get(Long id){
+        return books.stream().filter(book -> book.getId() == id).findFirst();
+    }
+
+
+
 
 
 }
