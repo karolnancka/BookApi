@@ -52,7 +52,20 @@ public class MockBookService implements BookService {
         return books.stream().filter(book -> book.getId() == id).findFirst();
     }
 
+    @Override
+    public void delete(Long id) {
+        if (get(id).isPresent()) {
+            books.remove(this.get(id).get());
+        }
+    }
 
+    @Override
+    public void update(Book book){
+        if (this.get(book.getId()).isPresent()) {
+            int indexOf = books.indexOf(this.get(book.getId()).get());
+            books.set(indexOf, book);
+        }
+    }
 
 
 

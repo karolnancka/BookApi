@@ -59,6 +59,12 @@ public class BookController {
     }
 
 
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable long id){
+        this.bookService.delete(id);
+    }
+
+
 
     @RequestMapping("/helloBook")
     public Book helloBook() {
